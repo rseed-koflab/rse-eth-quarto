@@ -1,0 +1,7 @@
+---
+title: "Scientific and Technical Publishing with Quarto"
+subtitle: "RSE Community Meeting"
+author: "Matthias Bannert, RSEED"
+format: revealjs
+---
+
