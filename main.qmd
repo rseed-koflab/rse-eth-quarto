@@ -5,3 +5,193 @@ author: "Matthias Bannert, RSEED"
 format: revealjs
 ---
 
+
+## quarto-survey.kof.ethz.ch {.center}
+
+
+
+## Survey Results: Quarto Expertise
+
+
+```{r, echo=FALSE, eval=TRUE}
+library(RPostgres)
+library(DBI)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+con <- dbConnect(
+  drv = Postgres(),
+  dbname = "postgres",
+  port = 1111,
+  user = Sys.getenv("PG_USER"),
+  password = Sys.getenv("PG_PASSWORD"),
+  host = Sys.getenv("PG_HOST")
+  )
+
+res <- dbGetQuery(con, "SELECT * FROM rseed.survey_responses")
+
+dbDisconnect(con)
+
+
+res |> 
+  select(id,quarto) |> 
+  ggplot(aes(x = quarto)) +
+  geom_bar(stat = "count",
+           fill = "steelblue",) + 
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()) + 
+  ylim(0,20) +
+  coord_flip()
+
+
+```
+
+
+## Survey Results: Frameworks
+
+```{r, echo=FALSE}
+
+res |> 
+  select(id,publishing) |> 
+  ggplot(aes(x = publishing)) +
+  geom_bar(stat = "count",
+           fill = "steelblue",) + 
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()) + 
+  ylim(0,20) +
+  coord_flip()
+
+
+```
+
+
+## Survey Results: Programming Languages
+
+```{r, echo=FALSE}
+
+res |> 
+  select(id, programming) |> 
+  ggplot(aes(x = programming)) +
+  geom_bar(stat = "count",
+           fill = "steelblue",) + 
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()) + 
+  ylim(0,20) +
+  coord_flip()
+
+
+```
+
+
+
+
+
+## Outlet: Presentations
+
+```{r, echo=TRUE, eval=FALSE}
+library(RPostgres)
+library(DBI)
+
+con <- dbConnect(
+  drv = Postgres(),
+  dbname = "postgres",
+  port = 1111,
+  user = Sys.getenv("PG_USER"),
+  password = Sys.getenv("PG_PASSWORD"),
+  host = Sys.getenv("PG_HOST")
+  )
+
+res <- dbGetQuery(con, "SELECT * FROM rseed.survey_responses")
+
+dbDisconnect(con)
+
+
+
+
+```
+
+
+## Outlet: Websites {.center}
+
+
+
+## Outlet: [Online Books](https://rse-book.github.io) {.center}
+
+
+## Outlet: Printed Books / ePub
+
+
+:::: {.columns}
+
+::: {.column width="40%"}
+![](rse_book.jpeg)
+:::
+
+::: {.column width="60%"}
+![](pdf_template.png)
+:::
+
+::::
+
+
+## Using CLI: Walkthrough {.center}
+
+1. Create and clone GitHub Repo
+
+2. Set Up GitHub Pages 
+
+3. Use quarto CLI to publish
+
+
+
+## GitHub Pages 
+
+
+```
+git checkout --orphan gh-pages
+git reset --hard # make sure all changes are committed before running this!
+git commit --allow-empty -m "Initialising gh-pages branch"
+git push origin gh-pages
+
+```
+
+
+
+
+
+
+## References
+
+- [Quarto Website](https://quarto.org)
+- [RSE Book](https://rse-book.github.io)
+- [RSEED](https://rseed.ch)
+
+
+## Pssst.... Join our Quarterly Newsletter
+
+
+```{r, echo=FALSE}
+library(qrcode)
+
+q <- qrcode::qr_code("https://kof.ethz.ch/en/the-institute/kof-divisions/research-division-kof-lab/rseed/subscription.html")
+plot(q)
+
+```
+
+
+
+[RSEED Newsletter Subscription](https://kof.ethz.ch/en/the-institute/kof-divisions/research-division-kof-lab/rseed/subscription.html)
+
+
+
+
+
+
+
+
+
+
